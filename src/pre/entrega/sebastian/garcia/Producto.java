@@ -6,13 +6,13 @@ public class Producto {
     
     private int id;
     private String nombreProducto;
-    private double precio;
+    private float precio;
     private int cantStock;
 
     public Producto() {
     }
 
-    public Producto(int id, String nombreProducto, double precio, int cantStock) {
+    public Producto(int id, String nombreProducto, float precio, int cantStock) {
         this.id = id;
         this.nombreProducto = nombreProducto;
         this.precio = precio;
@@ -39,7 +39,7 @@ public class Producto {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(float precio) {
         this.precio = precio;
     }
 
