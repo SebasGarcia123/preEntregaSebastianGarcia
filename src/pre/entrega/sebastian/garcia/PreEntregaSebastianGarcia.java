@@ -8,6 +8,7 @@ public class PreEntregaSebastianGarcia {
 
     static int id = 0;
     static ArrayList<Producto> listaProductos = new ArrayList<>();
+    static ArrayList<Pedido> listaPedidos = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -25,6 +26,9 @@ public class PreEntregaSebastianGarcia {
             System.out.println("2) Listar los productos disponibles.");
             System.out.println("3) Modificar un producto.");
             System.out.println("4) Borrar un producto");
+            System.out.println("5) Crear un pedido");
+            System.out.println("6) Listar pedidos");
+            System.out.println("7) Salir");
 
             opcion = sc.nextInt();
             switch (opcion) {
@@ -39,6 +43,15 @@ public class PreEntregaSebastianGarcia {
                     break;
                 case 4:
                     borrarProducto(listaProductos);
+                    break;
+                case 5:
+                    crearPedido(listaPedidos);
+                    break;
+                case 6:
+                    listarPedidos(listaPedidos);
+                    break;
+                case 7:
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("La opción ingresada es incorrecta");
@@ -62,7 +75,7 @@ public class PreEntregaSebastianGarcia {
     }
 
     public static void listarProductos() {
-        System.out.println("Id\tNombre\t\t\tPrecio\tCantidad");
+        System.out.println("Id\tNombre\t\tPrecio\tCantidad");
         System.out.println("------------------------------------------------");
         for (Producto producto : listaProductos) {
             System.out.println(producto.getId() + "\t" + producto.getNombreProducto() + "\t\t" + producto.getPrecio() + "\t" + producto.getCantStock() + "\t");;
@@ -110,11 +123,16 @@ public class PreEntregaSebastianGarcia {
                         System.out.println("Ingrese el id");
                         int idElegido = sc.nextInt();
                         producto = obtenerProducto(idElegido);
+                        System.out.println("El producto elegido es: ");
+                        System.out.println(producto.toString());
                         break;
                     case 2:
                         System.out.println("Ingrese el nombre");
-                        String nombreElegido = sc.nextLine();
+                        Scanner sc1 = new Scanner(System.in);
+                        String nombreElegido = sc1.nextLine();
+                        System.out.println("El producto elegido es: ");
                         producto = obtenerProducto(nombreElegido);
+                        System.out.println(producto.toString());
                         break;
                     default:
                         System.out.println("Opcion inválida");
@@ -132,22 +150,30 @@ public class PreEntregaSebastianGarcia {
                 switch (opcion1) {
                     case 1:
                         System.out.println("Ingrese el nombre nuevo: ");
-                        Scanner sc1 = new Scanner(System.in);
-                        String nombreNuevo = sc1.nextLine();
+                        Scanner sc2 = new Scanner(System.in);
+                        String nombreNuevo = sc2.nextLine();
                         producto.setNombreProducto(nombreNuevo);
                         System.out.println("El nombre se modificó con exito");
                         break;
                     case 2:
                         System.out.println("Ingrese el precio nuevo: ");
                         float precioNuevo = sc.nextFloat();
+                        if(precioNuevo >= 0){
                         producto.setPrecio(precioNuevo);
                         System.out.println("El precio se modificó con exito");
+                        }else{
+                            System.out.println("El precio debe ser mayor que cero!");
+                        }
                         break;
                     case 3:
                         System.out.println("Ingrese la nueva cantidad: ");
                         int cantNueva = sc.nextInt();
+                        if(cantNueva >= 0){
                         producto.setCantStock(cantNueva);
                         System.out.println("La cantidad se modificó con exito");
+                        }else{
+                            System.out.println("La cantidad no puede ser negativa!");
+                        }
                         break;
                 }
             } while (opcion1 != 4);
@@ -155,13 +181,22 @@ public class PreEntregaSebastianGarcia {
     }
     
     public static void borrarProducto(ArrayList<Producto> listaProductos){
-        Producto producto = null;
+        int encontrado = -1;
         listarProductos();
         Scanner sc = new Scanner(System.in);
         System.out.println("\nIngrese el id del producto que desea eliminar o digite 0 para salir : ");
-        int opcion = sc.nextInt();
-        while(opcion != 0){
-            listaProductos.remove(opcion-1);
+        int buscado = sc.nextInt();
+        for(Producto producto : listaProductos){
+            if(producto.getId() == buscado){
+                encontrado = buscado;
+            }
+        }
+        if(encontrado > 0){
+            listaProductos.remove(encontrado - 1);
+        }else{
+            System.out.println("No se encontró el producto para eliminar");
         }
     }
+    
+    
 }
