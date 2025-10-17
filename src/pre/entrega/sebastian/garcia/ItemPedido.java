@@ -36,7 +36,7 @@ public class ItemPedido {
         return idItem;
     }
 
-    public void setId(int id) {
+    public void setIdItem(int id) {
         this.idItem = id;
     }
 

@@ -32,13 +32,17 @@ public class Pedido {
         this.itemsPedido = itemsPedido;
     }
 
-    public StringBuilder imprimirPedido(ArrayList<ItemPedido> itemsPedido) {
-        StringBuilder pedido = new StringBuilder();
-        pedido.append("Pedido nro " + idPedido + "\n");
-        for(ItemPedido item : itemsPedido){
-            pedido.append(item.getIdItem() + " " +item.getProducto().getNombreProducto() + " " + item.getCantidadProducto() + "unidades");
+    public StringBuilder imprimirPedido(Pedido pedido) {
+        StringBuilder resumen = new StringBuilder();
+        float total = 0;
+        resumen.append("\nPedido nro " + pedido.getIdPedido() + "\n");
+        for(ItemPedido item : pedido.getItemsPedido()){
+            resumen.append(item.getIdItem() + " " +item.getProducto().getNombreProducto() + " \t" + item.getCantidadProducto() + " unidades.\n");
+            total += item.getProducto().getPrecio() * item.getCantidadProducto();
         }
-        return pedido;
+        resumen.append("Total: $" + total + "\n");
+
+        return resumen;
     }
     
 }
