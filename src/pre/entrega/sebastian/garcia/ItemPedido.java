@@ -4,6 +4,7 @@ package pre.entrega.sebastian.garcia;
 
 public class ItemPedido {
     
+    public int idItem;
     private Producto producto;
     private int cantidadProducto;
 
@@ -29,6 +30,14 @@ public class ItemPedido {
 
     public void setCantidadProducto(int cantidadProducto) {
         this.cantidadProducto = cantidadProducto;
+    }
+    
+    public int getIdItem() {
+        return idItem;
+    }
+
+    public void setId(int id) {
+        this.idItem = id;
     }
 
 }

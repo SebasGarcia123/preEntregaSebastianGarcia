@@ -1,24 +1,32 @@
 package pre.entrega.sebastian.garcia;
 
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PreEntregaSebastianGarcia {
 
-    static int id = 0;
+    static int id = 5;
     static ArrayList<Producto> listaProductos = new ArrayList<>();
     static ArrayList<Pedido> listaPedidos = new ArrayList<>();
 
     public static void main(String[] args) {
-
+        Producto producto1 = new Producto(1,"Fideos Marolio",100,1000);
+        Producto producto2 = new Producto(2,"Arroz Marolio",200,1000);
+        Producto producto3 = new Producto(3,"Yerba Marolio",300,1000);
+        Producto producto4 = new Producto(4,"Cafe Marolio",400,1000);
+        Producto producto5 = new Producto(5,"Palmitos Marolio",500,1000);
+        listaProductos.add(producto1);
+        listaProductos.add(producto2);
+        listaProductos.add(producto3);
+        listaProductos.add(producto4);
+        listaProductos.add(producto5);
+        
         mostrarMenu();
 
     }
 
     public static void mostrarMenu() {
         Scanner sc = new Scanner(System.in);
-        boolean salida = true;
         int opcion = 1;
         while (opcion != 0) {
             System.out.println("\nBienvenido! Elija la opción que desea realizar");
@@ -45,7 +53,7 @@ public class PreEntregaSebastianGarcia {
                     borrarProducto(listaProductos);
                     break;
                 case 5:
-                    crearPedido(listaPedidos);
+                    cargarPedido(listaProductos,listaPedidos);
                     break;
                 case 6:
                     listarPedidos(listaPedidos);
@@ -76,18 +84,18 @@ public class PreEntregaSebastianGarcia {
 
     public static void listarProductos() {
         System.out.println("Id\tNombre\t\tPrecio\tCantidad");
-        System.out.println("------------------------------------------------");
+        System.out.println("----------------------------------------");
         for (Producto producto : listaProductos) {
             System.out.println(producto.getId() + "\t" + producto.getNombreProducto() + "\t\t" + producto.getPrecio() + "\t" + producto.getCantStock() + "\t");;
         }
     }
 
     public static Producto obtenerProducto(int id) {
-        Producto productoEncontrado = null;
+            
         if (listaProductos.get(id - 1) == null) {
             System.out.println("No se encontró un producto con ese id");
         }
-        return productoEncontrado = listaProductos.get(id - 1);
+        return listaProductos.get(id - 1);
 
     }
 
@@ -197,6 +205,51 @@ public class PreEntregaSebastianGarcia {
             System.out.println("No se encontró el producto para eliminar");
         }
     }
+    
+        public static void listarPedidos( ArrayList<Pedido> listaPedidos){
+            for(Pedido pedido : listaPedidos){
+                pedido.imprimirPedido(pedido.getItemsPedido());
+            }
+        }
+    
+        public static void cargarPedido(ArrayList<Producto> listaProductos, ArrayList<Pedido> listaPedidos){
+        int opcion = 1;
+        ArrayList<ItemPedido> pedidoNuevo = new ArrayList<ItemPedido>();
+        Scanner sc = new Scanner(System.in);
+        Pedido pedido = new Pedido();
+        ItemPedido item = new ItemPedido();
+        int contador = 1;
+        while(opcion != 0){
+        System.out.println("Ingrese el id del producto o digite 0 para salir");
+        listarProductos();
+        opcion = sc.nextInt();
+        if(opcion!=0){
+        Producto productoElegido = obtenerProducto(opcion);
+        if(productoElegido == null){
+            System.out.println("No hay un producto con ese id");
+        }else{
+            item.setId(contador);
+            item.setProducto(productoElegido);
+            System.out.println("Ingrese la cantidad deseada");
+            int cant = sc.nextInt();
+            item.setCantidadProducto(cant);
+            pedidoNuevo.add(item);
+            //Descuenta cantidad del stock
+            int nuevoStock = listaProductos.get(opcion - 1).getCantStock() - cant;
+            listaProductos.get(opcion - 1).setCantStock(nuevoStock);
+            
+        }
+        contador += 1;
+        }
+        }
+        pedido.setItemsPedido(pedidoNuevo); 
+        pedido.setIdPedido(Pedido.contadorId);
+                
+        Pedido.contadorId += 1;
+        listaPedidos.add(pedido);
+        }
+        
+
     
     
 }
